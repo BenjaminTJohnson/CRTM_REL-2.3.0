@@ -451,7 +451,7 @@ CONTAINS
     overlap) &  ! Optional input
   RESULT(err_stat)
     ! Arguments
-    CLASS(CRTM_CloudCover_type), INTENT(OUT)  :: self
+    CLASS(CRTM_CloudCover_type), INTENT(INOUT)  :: self
     TYPE(CRTM_Atmosphere_type) , INTENT(INOUT):: atm        
     INTEGER,           OPTIONAL, INTENT(IN)   :: overlap
     ! Function result
@@ -958,7 +958,7 @@ CONTAINS
 !                   UNITS:      N/A
 !                   CLASS:      CRTM_CloudCover_type
 !                   DIMENSION:  Scalar
-!                   ATTRIBUTES: INTENT(IN OUT)
+!                   ATTRIBUTES: INTENT(INOUT)
 !
 ! INPUTS:
 !   cc_FWD:         The forward model cloud cover object.
@@ -984,7 +984,7 @@ CONTAINS
 !                   UNITS:      N/A
 !                   TYPE:       CRTM_Atmosphere_type
 !                   DIMENSION:  Scalar
-!                   ATTRIBUTES: INTENT(IN OUT)
+!                   ATTRIBUTES: INTENT(INOUT)
 !
 ! FUNCTION RESULT:
 !   err_stat:       The return value is an integer defining the error status.
@@ -1005,10 +1005,10 @@ CONTAINS
     atm_AD ) &  ! Output, but contains information on input
   RESULT(err_stat)
     ! Arguments
-    CLASS(CRTM_CloudCover_type), INTENT(IN OUT) :: self_AD
+    CLASS(CRTM_CloudCover_type), INTENT(INOUT) :: self_AD
     CLASS(CRTM_CloudCover_type), INTENT(IN)     :: cc_FWD
     TYPE(CRTM_Atmosphere_type) , INTENT(IN)     :: atm
-    TYPE(CRTM_Atmosphere_type) , INTENT(IN OUT) :: atm_AD
+    TYPE(CRTM_Atmosphere_type) , INTENT(INOUT) :: atm_AD
     ! Function result
     INTEGER :: err_stat
     ! Local parameters
@@ -1353,12 +1353,12 @@ CONTAINS
 !--------------------------------------------------------------------------------
 
   ELEMENTAL SUBROUTINE Destroy( self )
-    CLASS(CRTM_CloudCover_type), INTENT(OUT) :: self
+    CLASS(CRTM_CloudCover_type), INTENT(INOUT) :: self
     self%Is_Allocated = .FALSE.
   END SUBROUTINE Destroy
 
   ELEMENTAL SUBROUTINE iVar_Destroy( self )
-    CLASS(iVar_type), INTENT(OUT) :: self
+    CLASS(iVar_type), INTENT(INOUT) :: self
     self%Is_Allocated = .FALSE.
   END SUBROUTINE iVar_Destroy
 
@@ -1426,7 +1426,7 @@ CONTAINS
     Forward      , &
     Error_Message  )
     ! Arguments
-    CLASS(CRTM_CloudCover_type), INTENT(OUT) :: self
+    CLASS(CRTM_CloudCover_type), INTENT(INOUT) :: self
     INTEGER                    , INTENT(IN)  :: n_Layers
     INTEGER                    , INTENT(IN)  :: n_Clouds  
     LOGICAL,           OPTIONAL, INTENT(IN)  :: Forward
@@ -1480,7 +1480,7 @@ CONTAINS
     n_Clouds     , &  
     Error_Message  )
     ! Arguments
-    CLASS(iVar_type)      , INTENT(OUT) :: self
+    CLASS(iVar_type)      , INTENT(INOUT) :: self
     INTEGER               , INTENT(IN)  :: n_Layers
     INTEGER               , INTENT(IN)  :: n_Clouds 
     CHARACTER(*), OPTIONAL, INTENT(OUT) :: Error_Message
@@ -1668,7 +1668,7 @@ CONTAINS
 !            UNITS:      N/A
 !            CLASS:      CRTM_CloudCover_type
 !            DIMENSION:  Scalar or any rank
-!            ATTRIBUTES: INTENT(IN OUT)
+!            ATTRIBUTES: INTENT(INOUT)
 !
 ! COMMENTS:
 !   - The dimension components of the object are *NOT* set to zero.
@@ -1678,7 +1678,7 @@ CONTAINS
 !--------------------------------------------------------------------------------
 
   ELEMENTAL SUBROUTINE Set_To_Zero( self )
-    CLASS(CRTM_CloudCover_type), INTENT(IN OUT) :: self
+    CLASS(CRTM_CloudCover_type), INTENT(INOUT) :: self
     ! Do nothing if structure is unused
     IF ( .NOT. self%Is_Usable() ) RETURN
     ! Only zero out the data
@@ -1692,7 +1692,7 @@ CONTAINS
 
 
   ELEMENTAL SUBROUTINE iVar_Set_To_Zero( self )
-    CLASS(iVar_type), INTENT(IN OUT) :: self
+    CLASS(iVar_type), INTENT(INOUT) :: self
     ! Do nothing if structure is unused
     IF ( .NOT. self%Is_Usable() ) RETURN
     ! Only zero out the data

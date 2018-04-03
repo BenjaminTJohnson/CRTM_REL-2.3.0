@@ -1,0 +1,17 @@
+#!/bin/sh
+#-------------------------------------------------------------------------------#
+# PRODUCTION build settings for Linux gfortran compiler
+#-------------------------------------------------------------------------------#
+
+export FC="gfortran"
+
+export FCFLAGS="\
+-fimplicit-none \
+-ffree-form \
+-fno-second-underscore \
+-frecord-marker=4 \
+-std=f2008"
+
+export LDFLAGS=""
+
+export LIBS=""
