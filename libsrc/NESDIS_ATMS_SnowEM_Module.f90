@@ -96,6 +96,7 @@ MODULE NESDIS_ATMS_SnowEM_Module
   USE Type_Kinds
   USE NESDIS_LandEM_Module
   USE NESDIS_SnowEM_ATMS_Parameters
+  USE NESDIS_SnowEM_Parameters  
   IMPLICIT NONE
 
 ! Visibilities
@@ -426,7 +427,7 @@ CONTAINS
    !----------------------------------------------------------------------------------------------------------!
 
      IMPLICIT NONE
-
+     
      INTEGER,PARAMETER:: ncand = N_SNOW_TYPES,nch = N_FREQ_ATMS
      INTEGER:: i,snow_type
      REAL(fp)   :: em(ncand,nch)
@@ -435,7 +436,7 @@ CONTAINS
      REAL(fp)   :: kratio, bconst
 
    ! Sixteen candidate snow emissivity spectra
-     IF (snow_type == INVALID_SNOW_TYPE)snow_type = 4
+     IF (snow_type == INVALID_SNOW_TYPE) snow_type = 4
 
      em = TRANSPOSE(SNOW_EMISS_ATMS_LIB)
      freq = FREQUENCY_ATMS
