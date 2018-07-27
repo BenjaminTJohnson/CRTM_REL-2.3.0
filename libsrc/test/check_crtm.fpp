@@ -289,8 +289,8 @@ PROGRAM check_crtm
         !CALL CRTM_RTSolution_Inspect(rts(l,m))
         do nc = 1,n_layers
            !** layer#, profile#, channel#, temperature, TB, temperature jacobian
-           print '(3I5, 2F12.4,G12.4)',nc, m, chinfo(n)%Sensor_Channel(l), atm(m)%temperature(nc), &
-                rts(l,m)%Brightness_Temperature, atm_K(l,m)%temperature(nc)
+           print '(3I5, 3F12.4,G12.4)',nc, m, chinfo(n)%Sensor_Channel(l), atm(m)%pressure(nc),atm(m)%absorber(nc,1), &
+                rts(l,m)%Brightness_Temperature, atm_K(l,m)%absorber(nc,1)
         end do
      END DO
   END DO
