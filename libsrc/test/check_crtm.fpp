@@ -288,12 +288,14 @@ PROGRAM check_crtm
        !WRITE( *, '(/5x,"Channel ",i0," results")') chinfo(n)%Sensor_Channel(l)
         !CALL CRTM_RTSolution_Inspect(rts(l,m))
         print '(2I5, F12.4)', m, chinfo(n)%Sensor_Channel(l), rts(l,m)%Brightness_Temperature  
+!** Uncomment this below to get jacobian output
 !!$        do nc = 1,n_layers
 !!$           print '(3I5, 2F12.4)', nc,l,m, atm_K(l,m)%temperature(nc)
 !!$        end do
      END DO
    END DO
 
+ 
 
     ! ==========================================================================
     ! STEP 9. **** CLEAN UP FOR NEXT SENSOR ****
