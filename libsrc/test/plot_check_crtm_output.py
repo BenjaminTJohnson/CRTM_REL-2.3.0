@@ -3,10 +3,16 @@ import matplotlib.pyplot as plt
 
 f = open('data.txt', 'r')
 
+instrument= "CrIS"
+n_channels = 399 #399 for cris399_npp, 22 for atms_npp
+n_layers = 92
+channel_number = 398
+
+
 TBa = []
-Ta = []
+Qa = []
 Pressa = []
-T_Ka = []
+Q_Ka = []
 i = 0
 for line in f.readlines():
     #print(repr(line))
@@ -16,43 +22,44 @@ for line in f.readlines():
     columns = line.split()
     #[92    1   22    273.3560    242.6359  0.6129E-28]
 
-    Ta.append(float(columns[4])) #temperature
+    Qa.append(float(columns[4])) #humidity (Q)
     TBa.append(float(columns[5])) #TB
-    T_Ka.append(float(columns[6])) #T jacobian
-    Pressa.append(float(columns[3])) #T jacobian
+    Q_Ka.append(float(columns[6])) #Q jacobian
+    Pressa.append(float(columns[3])) #Pressure levels
     i = i + 1
 f.close()
 
-#22 refers to number of channels, 92 is the number of layers 
-T = np.reshape(Ta,(22,92))
-TB = np.reshape(TBa,(22,92))
-T_K = np.reshape(T_Ka,(22,92))
-Press = np.reshape(Pressa,(22,92))
+#n_channels refers to number of channels, 92 is the number of layers
+
+Q = np.reshape(Qa,(n_channels,92))
+TB = np.reshape(TBa,(n_channels,92))
+Q_K = np.reshape(Q_Ka,(n_channels,92))
+Press = np.reshape(Pressa,(n_channels,92))
 
 # do some plotting, here's an example.  Modify to fit your data:
-print T_K
-channel_number = 1
+print Q_K
+
 
 #example vertical plot of jacobian
 plt.subplot(1,2,1)
-plt.plot(T[channel_number,0:92],Press[channel_number,0:92],'r')
+plt.plot(Q[channel_number,0:92],Press[channel_number,0:92],'r')
 ax = plt.gca()
 ax.set_ylim(ax.get_ylim()[::-1])
 
-plt.xlabel('Brightness Temperature [K]')
+plt.xlabel('Humidity mass mixing ratio (Q) [g/kg]')
 plt.ylabel('Vertical Pressure Levels [hPa]')
-plt.title('title')
-plt.legend('TB','Tair')
+plt.title(instrument+" Ch: "+str(channel_number)+ " TB: "+str(TB[channel_number,0])+" [K]")
 plt.grid(True)
 
 plt.subplot(1,2,2)
-plt.plot(T_K[channel_number,0:92],Press[channel_number,0:92])
+plt.plot(Q_K[channel_number,0:92],Press[channel_number,0:92])
 ax = plt.gca()
 ax.set_ylim(ax.get_ylim()[::-1])
 
-plt.xlabel('Temperature Jacobian [TB/T]')
-plt.ylabel('Vertical Pressure Levels [hPa]')
-plt.title('title')
+plt.xlabel('Humidity Jacobian [dTB/dQ]')
+#plt.ylabel('Vertical Pressure Levels [hPa]')
+ax.get_yaxis().set_ticklabels([])
+plt.title("Jacobian")
 plt.grid(True)
 plt.savefig("test.png")  #macos command line "open test.png" to view.  Linux, try "display test.png" 
 
