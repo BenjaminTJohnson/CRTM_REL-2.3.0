@@ -56,7 +56,7 @@ PROGRAM check_crtm
   
   ! Sensor information
   INTEGER     , PARAMETER :: N_SENSORS = 1
-  CHARACTER(*), PARAMETER :: SENSOR_ID(N_SENSORS) = (/'atms_npp   '/)
+  CHARACTER(*), PARAMETER :: SENSOR_ID(N_SENSORS) = (/'cris399_npp'/)
 
   ! Some pretend geometry angles. The scan angle is based
   ! on the default Re (earth radius) and h (satellite height)
@@ -288,7 +288,8 @@ PROGRAM check_crtm
         !WRITE( *, '(/5x,"Channel ",i0," results")') chinfo(n)%Sensor_Channel(l)
         !CALL CRTM_RTSolution_Inspect(rts(l,m))
         do nc = 1,n_layers
-           !** layer#, profile#, channel#, temperature, TB, temperature jacobian
+           !** layer#, profile#, channel#, humidity mixing ratio, TB, humidity jacobian
+	   if (atm_K(l,m)%absorber(nc,1) < 1.0e-12) atm_K(l,m)%absorber(nc,1) = 0.0_fp
            print '(3I5, 3F12.4,G12.4)',nc, m, chinfo(n)%Sensor_Channel(l), atm(m)%pressure(nc),atm(m)%absorber(nc,1), &
                 rts(l,m)%Brightness_Temperature, atm_K(l,m)%absorber(nc,1)
         end do
