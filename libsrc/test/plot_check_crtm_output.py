@@ -23,6 +23,7 @@ for line in f.readlines():
     i = i + 1
 f.close()
 
+#22 refers to number of channels, 92 is the number of layers 
 T = np.reshape(Ta,(22,92))
 TB = np.reshape(TBa,(22,92))
 T_K = np.reshape(T_Ka,(22,92))
@@ -30,14 +31,26 @@ Press = np.reshape(Pressa,(22,92))
 
 # do some plotting, here's an example.  Modify to fit your data:
 print T_K
-channel_number = 21
+channel_number = 1
 
 #example vertical plot of jacobian
+plt.subplot(1,2,1)
+plt.plot(T[channel_number,0:92],Press[channel_number,0:92],'r')
+ax = plt.gca()
+ax.set_ylim(ax.get_ylim()[::-1])
+
+plt.xlabel('Brightness Temperature [K]')
+plt.ylabel('Vertical Pressure Levels [hPa]')
+plt.title('title')
+plt.legend('TB','Tair')
+plt.grid(True)
+
+plt.subplot(1,2,2)
 plt.plot(T_K[channel_number,0:92],Press[channel_number,0:92])
 ax = plt.gca()
 ax.set_ylim(ax.get_ylim()[::-1])
 
-plt.xlabel('Jacobian [TB/q]')
+plt.xlabel('Temperature Jacobian [TB/T]')
 plt.ylabel('Vertical Pressure Levels [hPa]')
 plt.title('title')
 plt.grid(True)
